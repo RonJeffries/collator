@@ -1,3 +1,5 @@
+import pytest
+
 from aged_name import AgedName
 from collator import Collator
 from result import Result
@@ -81,3 +83,38 @@ class TestCollated:
         assert result.name == 'TestBar'
         assert result.outcome == 'Unrun'
         assert result.is_new is True
+
+    def test_story_test_aged_names(self):
+        collator = Collator()
+        collator.begin()
+        collator.add(name='TestFoo', outcome='Pass')
+        collator.add(name='TestBar', outcome='Fail')
+        aged_names = list(collator.aged_names())
+        assert len(aged_names) == 2
+
+    def test_story_test(self):
+        collator = Collator()
+        collator.begin()
+        collator.add(name='TestFoo', outcome='Pass')
+        collator.add(name='TestBar', outcome='Fail')
+        initial_result = list(collator.results())
+        self.check(initial_result, 0,
+                   'TestFoo', 'Pass', True)
+        self.check(initial_result, 1,
+                   'TestBar', 'Fail', True)
+        collator.begin()
+        collator.add(name='TestBaz', outcome='Pass')
+        collator.add(name='TestBar', outcome='Pass')
+        second_result = list(collator.results())
+        self.check(second_result, 0,
+                   'TestFoo', 'Unrun', False)
+        self.check(second_result, 1,
+                   'TestBar', 'Pass', False)
+        self.check(second_result, 2,
+                   'TestBaz', 'Pass', True)
+
+    def check(self, results, index, name, outcome, new):
+        result = results[index]
+        assert result.name == name
+        assert result.outcome == outcome
+        assert result.is_new is new

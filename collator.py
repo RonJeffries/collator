@@ -18,6 +18,7 @@ class Collator:
 
     def add(self, name:str, outcome:str):
         self.outcomes[name] = outcome
+        self.add_name(name)
 
     def add_name(self, name:str):
         if name not in self.known_names and name not in self.new_names:
@@ -43,4 +44,5 @@ class Collator:
             return 'Unrun'
 
     def results(self):
-        return []
+        for aged_name in self.aged_names():
+            yield self.result_for(aged_name.name, is_new=aged_name.is_new)
