@@ -13,7 +13,7 @@ class Collator:
     def begin(self):
         self.known_names.extend(self.new_names)
         self.new_names = []
-        self.outcomes = defaultdict()
+        self.outcomes = dict()
 
     def add(self, name:str, outcome:str):
         self.outcomes[name] = outcome
