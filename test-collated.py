@@ -1,3 +1,5 @@
+from aged_name import AgedName
+from collator import Collator
 from result import Result
 from status import Status
 
@@ -13,3 +15,31 @@ class TestCollated:
         assert result.name == 'TestBar'
         assert result.outcome == 'Fail'
         assert result.is_new is True
+
+    def test_collator_initialized(self):
+        collator = Collator()
+        collator.begin()
+        assert list(collator.results()) == []
+
+    def test_added_name_is_new(self):
+        collator = Collator()
+        collator.begin()
+        collator.add_name('TestBar')
+        aged_names = list(collator.aged_names())
+        assert len(aged_names) == 1
+        assert aged_names[0].name == 'TestBar'
+        assert aged_names[0].is_new is True
+
+    def test_names_become_known(self):
+        collator = Collator()
+        collator.begin()
+        collator.add_name('TestBar')
+        unused = list(collator.aged_names())
+        collator.begin()
+        collator.add_name('TestFoo')
+        aged_names = list(collator.aged_names())
+        assert len(aged_names) == 2
+        assert aged_names[0].name == 'TestBar'
+        assert aged_names[0].is_new is False
+        assert aged_names[1].name == 'TestFoo'
+        assert aged_names[1].is_new is True
