@@ -23,14 +23,13 @@ class Collator:
             self.new_names.append(name)
 
     def aged_names(self):
-        known = self.known_names[:]
-        while known:
-            name = known.pop(0)
+        for name in self.known_names:
             yield AgedName(name=name, is_new=False)
-        while self.new_names:
-            name = self.new_names.pop(0)
+        for name in self.new_names:
             self.known_names.append(name)
             yield AgedName(name=name, is_new=True)
+        self.new_names = []
+
     def outcome_for(self, name):
         try:
             return self.outcomes[name]
