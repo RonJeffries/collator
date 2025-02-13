@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from aged_name import AgedName
 from result import Result
 from status import Status
@@ -12,7 +14,7 @@ class Collator:
     def begin(self):
         self.known_names.extend(self.new_names)
         self.new_names = []
-        self.outcomes = dict()
+        self.outcomes = defaultdict()
 
     def add(self, name:str, outcome:str):
         self.outcomes[name] = outcome
@@ -32,8 +34,13 @@ class Collator:
             yield AgedName(name=name, is_new=True)
 
     def result_for(self, name:str):
-        return Result(name=name, outcome=self.outcomes[name], is_new=True)
+        return Result(name=name, outcome=(self.outcome_for(name)), is_new=True)
 
+    def outcome_for(self, name):
+        try:
+            return self.outcomes[name]
+        except KeyError:
+            return 'Unrun'
 
     def results(self):
         return []
