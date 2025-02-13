@@ -30,7 +30,7 @@ class Collator:
             yield AgedName(name=name, is_new=True)
         self.new_names = []
 
-    def outcome_for(self, name):
+    def outcome_for(self, name:str):
         try:
             return self.outcomes[name]
         except KeyError:
@@ -40,6 +40,6 @@ class Collator:
         for aged_name in self.aged_names():
             yield self.result_for(aged_name.name, is_new=aged_name.is_new)
 
-    def result_for(self, name: str, is_new):
+    def result_for(self, name:str, is_new:bool):
         return Result(name=name, outcome=(self.outcome_for(name)), is_new=is_new)
 
