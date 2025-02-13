@@ -69,7 +69,7 @@ class TestCollated:
         collator = Collator()
         collator.begin()
         collator.add(name='TestFoo', outcome='Fail')
-        result = collator.result_for('TestFoo')
+        result = collator.result_for('TestFoo', True)
         assert result.name == 'TestFoo'
         assert result.outcome == 'Fail'
         assert result.is_new is True
@@ -77,7 +77,7 @@ class TestCollated:
     def test_missing_name_provides_unrun_result(self):
         collator = Collator()
         collator.begin()
-        result = collator.result_for('TestBar')
+        result = collator.result_for('TestBar', True)
         assert result.name == 'TestBar'
         assert result.outcome == 'Unrun'
         assert result.is_new is True

@@ -33,8 +33,8 @@ class Collator:
             self.known_names.append(name)
             yield AgedName(name=name, is_new=True)
 
-    def result_for(self, name:str):
-        return Result(name=name, outcome=(self.outcome_for(name)), is_new=True)
+    def result_for(self, name: str, is_new):
+        return Result(name=name, outcome=(self.outcome_for(name)), is_new=is_new)
 
     def outcome_for(self, name):
         try:
