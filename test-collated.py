@@ -64,3 +64,12 @@ class TestCollated:
         assert aged_names[1].is_new is True
         assert aged_names[0].name == 'TestBar'
         assert aged_names[0].is_new is False
+
+    def test_add_name_provides_result(self):
+        collator = Collator()
+        collator.begin()
+        collator.add(name='TestFoo', outcome='Fail')
+        result = collator.result_for('TestFoo')
+        assert result.name == 'TestFoo'
+        assert result.outcome == 'Fail'
+        assert result.is_new is True
