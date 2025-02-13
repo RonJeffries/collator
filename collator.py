@@ -7,7 +7,8 @@ class Collator:
         self.known_names = []
 
     def begin(self):
-        pass
+        self.known_names.extend(self.new_names)
+        self.new_names = []
 
     def add_name(self, name:str):
         if name not in self.known_names and name not in self.new_names:
