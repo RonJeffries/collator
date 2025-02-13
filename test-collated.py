@@ -43,3 +43,11 @@ class TestCollated:
         assert aged_names[0].is_new is False
         assert aged_names[1].name == 'TestFoo'
         assert aged_names[1].is_new is True
+
+    def test_duplicates_do_not_occur(self):
+        collator = Collator()
+        collator.begin()
+        collator.add_name('TestBar')
+        collator.add_name('TestBar')
+        aged_names = list(collator.aged_names())
+        assert len(aged_names) == 1

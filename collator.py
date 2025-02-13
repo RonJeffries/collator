@@ -10,7 +10,8 @@ class Collator:
         pass
 
     def add_name(self, name:str):
-        self.new_names.append(name)
+        if name not in self.known_names and name not in self.new_names:
+            self.new_names.append(name)
 
     def aged_names(self):
         known = self.known_names[:]
