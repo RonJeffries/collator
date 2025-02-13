@@ -1,4 +1,3 @@
-from collections import defaultdict
 
 from aged_name import AgedName
 from result import Result
