@@ -20,11 +20,11 @@ class Collator:
         self.sequencer.add_name(name)
 
     def results(self) -> Generator[Result, None, None]:
-        return (self._result_for(aged_name.name, is_new=aged_name.is_new)
+        return (self._result_for(aged_name.name, aged_name.is_new)
                 for aged_name in self.sequencer.aged_names())
 
     def _result_for(self, name: str, is_new: bool)-> Result:
-        return Result(name=name, outcome=(self._outcome_for(name)), is_new=is_new)
+        return Result(name, self._outcome_for(name), is_new)
 
     def _outcome_for(self, name: str) -> str:
         try:
