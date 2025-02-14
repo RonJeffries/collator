@@ -10,6 +10,7 @@ class Collator:
         self.known_names = []
 
     def __enter__(self):
+        self.begin()
         return self
 
     def __exit__(self, *args):
