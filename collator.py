@@ -1,5 +1,3 @@
-
-from aged_name import AgedName
 from result import Result
 from sequencer import Sequencer
 
@@ -22,9 +20,6 @@ class Collator:
 
     def add(self, name:str, outcome:str):
         self.outcomes[name] = outcome
-        self.add_name(name)
-
-    def add_name(self, name:str):
         self.sequencer.add_name(name)
 
     def aged_names(self):
