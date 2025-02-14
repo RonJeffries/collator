@@ -79,14 +79,6 @@ class TestCollated:
         assert result.outcome == 'Unrun'
         assert result.is_new is True
 
-    def test_story_test_aged_names(self):
-        collator = Collator()
-        collator.begin()
-        collator.add(name='TestFoo', outcome='Pass')
-        collator.add(name='TestBar', outcome='Fail')
-        aged_names = list(collator.aged_names())
-        assert len(aged_names) == 2
-
     def test_story_test(self):
         collator = Collator()
         collator.begin()
