@@ -1,13 +1,30 @@
 
 from aged_name import AgedName
 from result import Result
+from sequencer import Sequencer
 
 
 class Collator:
     def __init__(self):
         self.outcomes = dict()
-        self.new_names = []
-        self.known_names = []
+        self.sequencer = Sequencer()
+
+    @property
+    def known_names(self):
+        return self.sequencer.known_names
+
+    @known_names.setter
+    def known_names(self, known_names):
+        self.sequencer.known_names = known_names
+
+    @property
+    def new_names(self):
+        return self.sequencer.new_names
+
+    @new_names.setter
+    def new_names(self, new_names):
+        self.sequencer.new_names = new_names
+
 
     def __enter__(self):
         self.begin()
@@ -17,8 +34,7 @@ class Collator:
         pass
 
     def begin(self):
-        self.known_names.extend(self.new_names)
-        self.new_names = []
+        self.sequencer.begin()
         self.outcomes = dict()
 
     def add(self, name:str, outcome:str):
