@@ -3,6 +3,7 @@ import pytest
 from aged_name import AgedName
 from collator import Collator
 from result import Result
+from sequencer import Sequencer
 
 
 class TestCollated:
@@ -18,10 +19,10 @@ class TestCollated:
         assert list(collator.results()) == []
 
     def test_added_name_is_new(self):
-        collator = Collator()
-        collator.begin()
-        collator.add_name('TestBar')
-        aged_names = list(collator.aged_names())
+        sequencer = Sequencer()
+        sequencer.begin()
+        sequencer.add_name('TestBar')
+        aged_names = list(sequencer.aged_names())
         assert len(aged_names) == 1
         assert aged_names[0].name == 'TestBar'
         assert aged_names[0].is_new is True
