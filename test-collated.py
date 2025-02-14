@@ -28,13 +28,13 @@ class TestCollated:
         assert aged_names[0].is_new is True
 
     def test_names_become_known(self):
-        collator = Collator()
-        collator.begin()
-        collator.add_name('TestBar')
-        unused = list(collator.aged_names())
-        collator.begin()
-        collator.add_name('TestFoo')
-        aged_names = list(collator.aged_names())
+        sequencer = Sequencer()
+        sequencer.begin()
+        sequencer.add_name('TestBar')
+        unused = list(sequencer.aged_names())
+        sequencer.begin()
+        sequencer.add_name('TestFoo')
+        aged_names = list(sequencer.aged_names())
         assert len(aged_names) == 2
         assert aged_names[0].name == 'TestBar'
         assert aged_names[0].is_new is False
@@ -42,20 +42,20 @@ class TestCollated:
         assert aged_names[1].is_new is True
 
     def test_duplicates_do_not_occur(self):
-        collator = Collator()
-        collator.begin()
-        collator.add_name('TestBar')
-        collator.add_name('TestBar')
-        aged_names = list(collator.aged_names())
+        sequencer = Sequencer()
+        sequencer.begin()
+        sequencer.add_name('TestBar')
+        sequencer.add_name('TestBar')
+        aged_names = list(sequencer.aged_names())
         assert len(aged_names) == 1
 
     def test_begin_works_even_if_names_not_read_out(self):
-        collator = Collator()
-        collator.begin()
-        collator.add_name('TestBar')
-        collator.begin()
-        collator.add_name('TestFoo')
-        aged_names = list(collator.aged_names())
+        sequencer = Sequencer()
+        sequencer.begin()
+        sequencer.add_name('TestBar')
+        sequencer.begin()
+        sequencer.add_name('TestFoo')
+        aged_names = list(sequencer.aged_names())
         assert len(aged_names) == 2
         assert aged_names[1].name == 'TestFoo'
         assert aged_names[1].is_new is True
