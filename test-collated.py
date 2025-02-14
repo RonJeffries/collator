@@ -15,12 +15,12 @@ class TestCollated:
 
     def test_collator_initialized(self):
         collator = Collator()
-        collator.begin()
+        collator._testing_begin()
         assert list(collator.results()) == []
 
     def test_added_name_is_new(self):
         sequencer = Sequencer()
-        sequencer.begin()
+        sequencer._testing_begin()
         sequencer.add_name('TestBar')
         aged_names = list(sequencer.aged_names())
         assert len(aged_names) == 1
@@ -29,10 +29,10 @@ class TestCollated:
 
     def test_names_become_known(self):
         sequencer = Sequencer()
-        sequencer.begin()
+        sequencer._testing_begin()
         sequencer.add_name('TestBar')
         unused = list(sequencer.aged_names())
-        sequencer.begin()
+        sequencer._testing_begin()
         sequencer.add_name('TestFoo')
         aged_names = list(sequencer.aged_names())
         assert len(aged_names) == 2
@@ -43,7 +43,7 @@ class TestCollated:
 
     def test_duplicates_do_not_occur(self):
         sequencer = Sequencer()
-        sequencer.begin()
+        sequencer._testing_begin()
         sequencer.add_name('TestBar')
         sequencer.add_name('TestBar')
         aged_names = list(sequencer.aged_names())
@@ -51,9 +51,9 @@ class TestCollated:
 
     def test_begin_works_even_if_names_not_read_out(self):
         sequencer = Sequencer()
-        sequencer.begin()
+        sequencer._testing_begin()
         sequencer.add_name('TestBar')
-        sequencer.begin()
+        sequencer._testing_begin()
         sequencer.add_name('TestFoo')
         aged_names = list(sequencer.aged_names())
         assert len(aged_names) == 2
@@ -64,24 +64,24 @@ class TestCollated:
 
     def test_add_name_provides_result(self):
         collator = Collator()
-        collator.begin()
+        collator._testing_begin()
         collator.add(name='TestFoo', outcome='Fail')
-        result = collator.result_for('TestFoo', True)
+        result = collator._result_for('TestFoo', True)
         assert result.name == 'TestFoo'
         assert result.outcome == 'Fail'
         assert result.is_new is True
 
     def test_missing_name_provides_unrun_result(self):
         collator = Collator()
-        collator.begin()
-        result = collator.result_for('TestBar', True)
+        collator._testing_begin()
+        result = collator._result_for('TestBar', True)
         assert result.name == 'TestBar'
         assert result.outcome == 'Unrun'
         assert result.is_new is True
 
     def test_story_test(self):
         collator = Collator()
-        collator.begin()
+        collator._testing_begin()
         collator.add(name='TestFoo', outcome='Pass')
         collator.add(name='TestBar', outcome='Fail')
         initial_result = list(collator.results())
@@ -89,7 +89,7 @@ class TestCollated:
                    'TestFoo', 'Pass', True)
         self.check(initial_result, 1,
                    'TestBar', 'Fail', True)
-        collator.begin()
+        collator._testing_begin()
         collator.add(name='TestBaz', outcome='Pass')
         collator.add(name='TestBar', outcome='Pass')
         second_result = list(collator.results())
