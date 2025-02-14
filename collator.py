@@ -42,8 +42,7 @@ class Collator:
         self.add_name(name)
 
     def add_name(self, name:str):
-        if name not in self.known_names and name not in self.new_names:
-            self.new_names.append(name)
+        self.sequencer.add_name(name)
 
     def aged_names(self):
         yield from self.yield_known_names()
