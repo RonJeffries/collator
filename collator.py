@@ -9,6 +9,12 @@ class Collator:
         self.new_names = []
         self.known_names = []
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
     def begin(self):
         self.known_names.extend(self.new_names)
         self.new_names = []

@@ -113,21 +113,21 @@ class TestCollated:
         assert result.outcome == outcome
         assert result.is_new is new
 
-    @pytest.mark.skip("reimplement")
     def test_with(self):
         collator = Collator()
         with collator:
             collator.add(name='TestFoo', outcome='Pass')
             collator.add(name='TestBar', outcome='Fail')
             initial_result = list(collator.results())
-        self.check(initial_result, 0,
-                   'TestFoo', 'Pass', True)
-        self.check(initial_result, 1,
-                   'TestBar', 'Fail', True)
         with collator:
             collator.add(name='TestBaz', outcome='Pass')
             collator.add(name='TestBar', outcome='Pass')
             second_result = list(collator.results())
+
+        self.check(initial_result, 0,
+                   'TestFoo', 'Pass', True)
+        self.check(initial_result, 1,
+                   'TestBar', 'Fail', True)
         self.check(second_result, 0,
                    'TestFoo', 'Unrun', False)
         self.check(second_result, 1,
