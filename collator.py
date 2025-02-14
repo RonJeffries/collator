@@ -9,23 +9,6 @@ class Collator:
         self.outcomes = dict()
         self.sequencer = Sequencer()
 
-    @property
-    def known_names(self):
-        return self.sequencer.known_names
-
-    @known_names.setter
-    def known_names(self, known_names):
-        self.sequencer.known_names = known_names
-
-    @property
-    def new_names(self):
-        return self.sequencer.new_names
-
-    @new_names.setter
-    def new_names(self, new_names):
-        self.sequencer.new_names = new_names
-
-
     def __enter__(self):
         self.begin()
         return self
@@ -53,10 +36,10 @@ class Collator:
         except KeyError:
             return 'Unrun'
 
+    def result_for(self, name:str, is_new:bool):
+        return Result(name=name, outcome=(self.outcome_for(name)), is_new=is_new)
+
     def results(self):
         for aged_name in self.aged_names():
             yield self.result_for(aged_name.name, is_new=aged_name.is_new)
-
-    def result_for(self, name:str, is_new:bool):
-        return Result(name=name, outcome=(self.outcome_for(name)), is_new=is_new)
 
