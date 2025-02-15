@@ -27,10 +27,7 @@ class Collator:
         return Result(name, self._outcome_for(name), is_new)
 
     def _outcome_for(self, name: str) -> str:
-        try:
-            return self.outcomes[name]
-        except KeyError:
-            return 'Unrun'
+        return self.outcomes.get(name, "Unrun")
 
     # noinspection PyProtectedMember
     def _testing_begin(self):

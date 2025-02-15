@@ -127,3 +127,16 @@ class TestCollated:
                    'TestBar', 'Pass', False)
         self.check(second_result, 2,
                    'TestBaz', 'Pass', True)
+
+    def test_key_order(self):
+        d = dict()
+        d['foo'] = 1
+        d['bar'] = 2
+        d['baz'] = 3
+        assert list(d.keys()) == ['foo', 'bar', 'baz']
+        d['bar'] = 20
+        assert list(d.keys()) == ['foo', 'bar', 'baz']
+        d['foo'] = 10
+        d['mumble'] = 30
+        assert list(d.keys()) == ['foo', 'bar', 'baz', 'mumble']
+        assert list(d.values()) == [10, 20, 3, 30]
