@@ -1,6 +1,4 @@
-import pytest
 
-from aged_name import AgedName
 from collator import Collator
 from result import Result
 from sequencer import Sequencer
@@ -31,7 +29,7 @@ class TestCollated:
         sequencer = Sequencer()
         sequencer._testing_begin()
         sequencer.add_name('TestBar')
-        unused = list(sequencer.aged_names())
+        _unused = list(sequencer.aged_names())
         sequencer._testing_begin()
         sequencer.add_name('TestFoo')
         aged_names = list(sequencer.aged_names())
@@ -100,7 +98,8 @@ class TestCollated:
         self.check(second_result, 2,
                    'TestBaz', 'Pass', True)
 
-    def check(self, results, index, name, outcome, new):
+    @staticmethod
+    def check(results, index, name, outcome, new):
         result = results[index]
         assert result.name == name
         assert result.outcome == outcome
