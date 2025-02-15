@@ -39,3 +39,13 @@ class TestDictCollator:
             results = dc.results()
         self.check(results,0, 'TestFoo', 'Fail', False)
         self.check(results,1, 'TestBar', 'Pass', True)
+
+    def test_unrun(self):
+        dc = DictCollator()
+        with dc as collator:
+            dc.add('TestFoo', "Fail")
+        with dc as collator:
+            dc.add('TestBar', "Pass")
+            results = dc.results()
+        self.check(results,0, 'TestFoo', 'Unrun', False)
+        self.check(results,1, 'TestBar', 'Pass', True)

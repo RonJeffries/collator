@@ -8,6 +8,8 @@ class DictCollator:
 
     def __enter__(self):
         self.high_water = len(self.collator)
+        for key in self.collator:
+            self.collator[key] = 'Unrun'
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
