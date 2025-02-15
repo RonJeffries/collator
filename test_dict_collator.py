@@ -42,10 +42,38 @@ class TestDictCollator:
 
     def test_unrun(self):
         dc = DictCollator()
-        with dc as collator:
+        with dc:
             dc.add('TestFoo', "Fail")
         with dc as collator:
             dc.add('TestBar', "Pass")
             results = dc.results()
         self.check(results,0, 'TestFoo', 'Unrun', False)
         self.check(results,1, 'TestBar', 'Pass', True)
+
+    def test_three_phases(self):
+        dc = DictCollator()
+        with dc:
+            dc.add('TestFoo', "Pass")
+            dc.add('TestBar', "Pass")
+            dc.add('TestBaz', "Fail")
+            results = dc.results()
+        assert [r.name for r in results] == ['TestFoo', 'TestBar', 'TestBaz']
+        assert [r.outcome for r in results] == ['Pass', 'Pass', 'Fail']
+        assert [r.is_new for r in results] == [True, True, True]
+
+        with dc:
+            dc.add('TestFoo', "Fail")
+            dc.add('Test2New', 'Pass')
+            results = dc.results()
+        assert [r.name for r in results] == ['TestFoo', 'TestBar', 'TestBaz', 'Test2New']
+        assert [r.outcome for r in results] == ['Fail', 'Unrun', 'Unrun', 'Pass']
+        assert [r.is_new for r in results] == [False, False, False, True]
+
+        with dc:
+            dc.add('TestBar', 'Fail')
+            dc.add('Test3New', 'Pass')
+            results = dc.results()
+        assert [r.name for r in results] == ['TestFoo', 'TestBar', 'TestBaz', 'Test2New', 'Test3New']
+        assert [r.outcome for r in results] == ['Unrun', 'Fail', 'Unrun', 'Unrun', 'Pass']
+        assert [r.is_new for r in results] == [False, False, False, False, True]
+
