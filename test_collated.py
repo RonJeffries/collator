@@ -13,7 +13,8 @@ class TestCollated:
 
     def test_collator_initialized(self):
         collator = Collator()
-        collator._testing_begin()
+        with collator:
+            pass
         assert list(collator.results()) == []
 
     def test_added_name_is_new(self):
