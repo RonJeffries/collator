@@ -23,6 +23,3 @@ class Collator:
     def results(self) -> Generator[Result, None, None]:
         return (Result(k, v, i>= self.high_water)
                 for i, (k, v) in enumerate(self.outcomes.items()))
-
-    def _outcome_for(self, name: str) -> str:
-        return self.outcomes.get(name, "Unrun")
