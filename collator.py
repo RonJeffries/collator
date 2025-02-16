@@ -10,7 +10,8 @@ class Collator:
 
     def __enter__(self) -> Self:
         self.sequencer._testing_begin()
-        self.outcomes = dict()
+        for name in self.outcomes.keys():
+            self.outcomes[name] = 'Unrun'
         return self
 
     def __exit__(self, *args):
