@@ -62,9 +62,9 @@ class TestCollated:
 
     def test_add_name_provides_result(self):
         collator = Collator()
-        collator._testing_begin()
-        collator.add(name='TestFoo', outcome='Fail')
-        result = collator._result_for('TestFoo', True)
+        with collator:
+            collator.add(name='TestFoo', outcome='Fail')
+            result = collator._result_for('TestFoo', True)
         assert result.name == 'TestFoo'
         assert result.outcome == 'Fail'
         assert result.is_new is True
