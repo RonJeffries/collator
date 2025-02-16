@@ -1,7 +1,6 @@
 
 from collator import Collator
 from result import Result
-from sequencer import Sequencer
 
 
 class TestCollated:
@@ -16,50 +15,6 @@ class TestCollated:
         with collator:
             pass
         assert list(collator.results()) == []
-
-    def test_added_name_is_new(self):
-        sequencer = Sequencer()
-        sequencer._testing_begin()
-        sequencer.add_name('TestBar')
-        aged_names = list(sequencer.aged_names())
-        assert len(aged_names) == 1
-        assert aged_names[0].name == 'TestBar'
-        assert aged_names[0].is_new is True
-
-    def test_names_become_known(self):
-        sequencer = Sequencer()
-        sequencer._testing_begin()
-        sequencer.add_name('TestBar')
-        _unused = list(sequencer.aged_names())
-        sequencer._testing_begin()
-        sequencer.add_name('TestFoo')
-        aged_names = list(sequencer.aged_names())
-        assert len(aged_names) == 2
-        assert aged_names[0].name == 'TestBar'
-        assert aged_names[0].is_new is False
-        assert aged_names[1].name == 'TestFoo'
-        assert aged_names[1].is_new is True
-
-    def test_duplicates_do_not_occur(self):
-        sequencer = Sequencer()
-        sequencer._testing_begin()
-        sequencer.add_name('TestBar')
-        sequencer.add_name('TestBar')
-        aged_names = list(sequencer.aged_names())
-        assert len(aged_names) == 1
-
-    def test_begin_works_even_if_names_not_read_out(self):
-        sequencer = Sequencer()
-        sequencer._testing_begin()
-        sequencer.add_name('TestBar')
-        sequencer._testing_begin()
-        sequencer.add_name('TestFoo')
-        aged_names = list(sequencer.aged_names())
-        assert len(aged_names) == 2
-        assert aged_names[1].name == 'TestFoo'
-        assert aged_names[1].is_new is True
-        assert aged_names[0].name == 'TestBar'
-        assert aged_names[0].is_new is False
 
     def test_story_test(self):
         collator = Collator()
