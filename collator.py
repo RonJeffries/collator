@@ -28,10 +28,7 @@ class Collator:
         return (self._result_for(aged_name.name, aged_name.is_new)
                 for aged_name in self.aged_names())
 
-    def aged_names(self):
-        return self.sequencer.aged_names()
-
-    def get_aged_names(self) -> Generator[AgedName, None, None]:
+    def aged_names(self) -> Generator[AgedName, None, None]:
         return (AgedName(k, i>= self.high_water)
                 for i, (k, v) in enumerate(self.outcomes.items()))
 
