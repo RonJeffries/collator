@@ -71,8 +71,8 @@ class TestCollated:
 
     def test_missing_name_provides_unrun_result(self):
         collator = Collator()
-        collator._testing_begin()
-        result = collator._result_for('TestBar', True)
+        with collator:
+            result = collator._result_for('TestBar', True)
         assert result.name == 'TestBar'
         assert result.outcome == 'Unrun'
         assert result.is_new is True
