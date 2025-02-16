@@ -1,3 +1,4 @@
+from aged_name import AgedName
 from result import Result
 from sequencer import Sequencer
 from typing import Generator, Self
@@ -29,6 +30,10 @@ class Collator:
 
     def aged_names(self):
         return self.sequencer.aged_names()
+
+    def get_aged_names(self):
+        return [AgedName(k, i>= self.high_water)
+                for i, (k, v) in enumerate(self.outcomes.items())]
 
     def _result_for(self, name: str, is_new: bool)-> Result:
         return Result(name, self._outcome_for(name), is_new)

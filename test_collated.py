@@ -130,6 +130,18 @@ class TestCollated:
         self.check(second_result, 2,
                    'TestBaz', 'Pass', True)
 
+    def test_collator_aged_names(self):
+        collator = Collator()
+        with collator:
+            collator.add(name='TestFoo', outcome='Pass')
+            collator.add(name='TestBar', outcome='Fail')
+        with collator:
+            collator.add(name='TestBaz', outcome='Pass')
+            aged = collator.get_aged_names()
+        assert len(aged) == 3
+        assert [a.name for a in aged] == ['TestFoo', 'TestBar', 'TestBaz']
+        assert [a.is_new for a in aged] == [False, False, True]
+
     def test_key_order(self):
         d = dict()
         d['foo'] = 1
