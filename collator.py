@@ -9,7 +9,8 @@ class Collator:
         self.sequencer = Sequencer()
 
     def __enter__(self) -> Self:
-        self._testing_begin()
+        self.sequencer._testing_begin()
+        self.outcomes = dict()
         return self
 
     def __exit__(self, *args):
@@ -28,9 +29,3 @@ class Collator:
 
     def _outcome_for(self, name: str) -> str:
         return self.outcomes.get(name, "Unrun")
-
-    # noinspection PyProtectedMember
-    def _testing_begin(self):
-        self.sequencer._testing_begin()
-        self.outcomes = dict()
-
