@@ -81,6 +81,7 @@ class TestCollated:
     def test_story_test(self):
         collator = Collator()
         with collator:
+            assert collator.high_water == 0
             collator.add(name='TestFoo', outcome='Pass')
             collator.add(name='TestBar', outcome='Fail')
             initial_result = list(collator.results())
@@ -89,6 +90,7 @@ class TestCollated:
         self.check(initial_result, 1,
                    'TestBar', 'Fail', True)
         with collator:
+            assert collator.high_water == 2
             collator.add(name='TestBaz', outcome='Pass')
             collator.add(name='TestBar', outcome='Pass')
             second_result = list(collator.results())

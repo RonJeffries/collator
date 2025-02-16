@@ -7,11 +7,13 @@ class Collator:
     def __init__(self):
         self.outcomes = dict()
         self.sequencer = Sequencer()
+        self.high_water = 0
 
     def __enter__(self) -> Self:
         self.sequencer._testing_begin()
         for name in self.outcomes.keys():
             self.outcomes[name] = 'Unrun'
+        self.high_water = len(self.outcomes)
         return self
 
     def __exit__(self, *args):
