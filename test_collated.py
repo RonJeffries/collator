@@ -120,7 +120,7 @@ class TestCollated:
             collator.add(name='TestBar', outcome='Fail')
         with collator:
             collator.add(name='TestBaz', outcome='Pass')
-            aged = list(collator.aged_names())
+            aged = list(collator.results())
         assert len(aged) == 3
         assert [a.name for a in aged] == ['TestFoo', 'TestBar', 'TestBaz']
         assert [a.is_new for a in aged] == [False, False, True]

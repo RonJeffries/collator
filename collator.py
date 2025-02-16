@@ -21,11 +21,7 @@ class Collator:
         self.outcomes[name] = outcome
 
     def results(self) -> Generator[Result, None, None]:
-        return (Result(a_n.name, self._outcome_for(a_n.name), a_n.is_new)
-                for a_n in self.aged_names())
-
-    def aged_names(self) -> Generator[AgedName, None, None]:
-        return (AgedName(k, i>= self.high_water)
+        return (Result(k, v, i>= self.high_water)
                 for i, (k, v) in enumerate(self.outcomes.items()))
 
     def _outcome_for(self, name: str) -> str:
