@@ -29,8 +29,8 @@ class TestCollated:
         self.check(initial_result, 1,
                    'TestBar', 'Fail', True)
         with collator:
-            assert collator.high_water == 2
             collator.add(name='TestBaz', outcome='Pass')
+            assert collator.high_water == 2
             collator.add(name='TestBar', outcome='Pass')
             second_result = list(collator.results())
         self.check(second_result, 0,
@@ -74,6 +74,7 @@ class TestCollated:
         with collator:
             collator.add(name='TestFoo', outcome='Pass')
             collator.add(name='TestBar', outcome='Fail')
+            collator.results()
         with collator:
             collator.add(name='TestBaz', outcome='Pass')
             aged = list(collator.results())

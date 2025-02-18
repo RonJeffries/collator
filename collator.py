@@ -9,7 +9,6 @@ class Collator:
         self.reset_on_add = self._prepare_for_next_batch
 
     def __enter__(self) -> Self:
-        self._prepare_for_next_batch()
         return self
 
     def _prepare_for_next_batch(self):
