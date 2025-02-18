@@ -8,18 +8,6 @@ class Collator:
         self.high_water = 0
         self.reset_on_add = self._prepare_for_next_batch
 
-    def __enter__(self) -> Self:
-        return self
-
-    def _prepare_for_next_batch(self):
-        for name in self.outcomes.keys():
-            self.outcomes[name] = 'Unrun'
-        self.high_water = len(self.outcomes)
-        self.reset_on_add = lambda: None
-
-    def __exit__(self, *args):
-        pass
-
     def add(self, name: str, outcome: str):
         self.reset_on_add()
         self.outcomes[name] = outcome
@@ -28,3 +16,9 @@ class Collator:
         self.reset_on_add = self._prepare_for_next_batch
         return (Result(k, v, i>= self.high_water)
                 for i, (k, v) in enumerate(self.outcomes.items()))
+
+    def _prepare_for_next_batch(self):
+        for name in self.outcomes.keys():
+            self.outcomes[name] = 'Unrun'
+        self.high_water = len(self.outcomes)
+        self.reset_on_add = lambda: None
