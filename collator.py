@@ -8,10 +8,13 @@ class Collator:
         self.high_water = 0
 
     def __enter__(self) -> Self:
+        self._prepare_for_next_batch()
+        return self
+
+    def _prepare_for_next_batch(self):
         for name in self.outcomes.keys():
             self.outcomes[name] = 'Unrun'
         self.high_water = len(self.outcomes)
-        return self
 
     def __exit__(self, *args):
         pass
