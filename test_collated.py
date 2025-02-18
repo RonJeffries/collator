@@ -95,7 +95,6 @@ class TestCollated:
         assert list(d.keys()) == ['foo', 'bar', 'baz', 'mumble']
         assert list(d.values()) == [10, 20, 3, 30]
 
-    @pytest.mark.skip("soon")
     def test_collator_without_with(self):
         collator = Collator()
         collator.add(name='TestFoo', outcome='Pass')
