@@ -16,6 +16,7 @@ class Collator:
         for name in self.outcomes.keys():
             self.outcomes[name] = 'Unrun'
         self.high_water = len(self.outcomes)
+        self.reset_on_add = lambda: None
 
     def __exit__(self, *args):
         pass
