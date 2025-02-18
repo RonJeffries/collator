@@ -25,5 +25,6 @@ class Collator:
         self.outcomes[name] = outcome
 
     def results(self) -> Generator[Result, None, None]:
+        self.reset_on_add = self._prepare_for_next_batch
         return (Result(k, v, i>= self.high_water)
                 for i, (k, v) in enumerate(self.outcomes.items()))
