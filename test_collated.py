@@ -1,3 +1,4 @@
+import pytest
 
 from collator import Collator
 from result import Result
@@ -92,3 +93,30 @@ class TestCollated:
         d['mumble'] = 30
         assert list(d.keys()) == ['foo', 'bar', 'baz', 'mumble']
         assert list(d.values()) == [10, 20, 3, 30]
+
+    @pytest.mark.skip("soon")
+    def test_collator_without_with(self):
+        collator = Collator()
+        collator.add(name='TestFoo', outcome='Pass')
+        collator.add(name='TestBar', outcome='Fail')
+        initial_result = list(collator.results())
+
+        self.check(initial_result, 0,
+                   'TestFoo', 'Pass', True)
+        self.check(initial_result, 1,
+                   'TestBar', 'Fail', True)
+        duplicate_initial_result = list(collator.results())
+        assert duplicate_initial_result == initial_result
+
+        collator.add(name='TestBaz', outcome='Pass')
+        collator.add(name='TestBar', outcome='Pass')
+        second_result = list(collator.results())
+
+        self.check(second_result, 0,
+                   'TestFoo', 'Unrun', False)
+        self.check(second_result, 1,
+                   'TestBar', 'Pass', False)
+        self.check(second_result, 2,
+                   'TestBaz', 'Pass', True)
+        duplicate_second_result = list(collator.results())
+        assert duplicate_second_result == second_result
