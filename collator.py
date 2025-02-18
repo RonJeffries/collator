@@ -22,6 +22,7 @@ class Collator:
         pass
 
     def add(self, name: str, outcome: str):
+        self.reset_on_add()
         self.outcomes[name] = outcome
 
     def results(self) -> Generator[Result, None, None]:
