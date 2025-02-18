@@ -6,6 +6,7 @@ class Collator:
     def __init__(self):
         self.outcomes = dict()
         self.high_water = 0
+        self.reset_on_add = self._prepare_for_next_batch
 
     def __enter__(self) -> Self:
         self._prepare_for_next_batch()
